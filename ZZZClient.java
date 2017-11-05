@@ -1,5 +1,5 @@
 /*
-	ZZZClient.fs
+	ZZZClient.java
 
 	Copyright 2017 ZZZ Ltd. - Bulgaria
 
