@@ -30,52 +30,47 @@ import java.net.Socket;
  */
 public class MainApp {
 
-    public static String ZZZProgram(String serverHost, int serverPort,
-            String program)
-    {
-        String result = "";
+	public static String ZZZProgram(String serverHost, int serverPort, String program) {
+		String result = "";
         
-        try {
-        	if(serverHost.equals("localhost"))
-        		serverHost = "127.0.0.1";
-            Socket socket = new Socket(serverHost, serverPort);
-            PrintWriter out = new PrintWriter(new OutputStreamWriter(
-                    socket.getOutputStream(), "UTF-8"), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream(), "UTF-8"));
-            
-            out.print(program + '\0');
-            out.flush();
-            
-            StringBuilder sb = new StringBuilder();
-            int DEFAULT_BUFFER_SIZE = 1000;
-            char buf[] = new char[DEFAULT_BUFFER_SIZE];
-            int n;
-            while ((n = in.read(buf)) > 0) {
-                sb.append(buf, 0, n);
-            }
-            result = sb.toString();
+		try {
+			if(serverHost.equals("localhost"))
+				serverHost = "127.0.0.1";
+			Socket socket = new Socket(serverHost, serverPort);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true);
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
-            out.close();
-            in.close();
-            socket.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }    
-        
-        return result;
-    }
+			out.print(program + '\0');
+			out.flush();
+            
+			StringBuilder sb = new StringBuilder();
+			int DEFAULT_BUFFER_SIZE = 1000;
+			char buf[] = new char[DEFAULT_BUFFER_SIZE];
+			int n;
+			while ((n = in.read(buf)) > 0) {
+				sb.append(buf, 0, n);
+			}
+			result = sb.toString();
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-    	long startTime = System.currentTimeMillis();
-    	
-        System.out.println(ZZZProgram("localhost", 3333, "#[cout;Hello world from ZZZServer!]"));
-        
-        long stopTime = System.currentTimeMillis();
-        long elapsedTime = stopTime - startTime;
-        System.out.println(elapsedTime + " milliseconds");
+			out.close();
+			in.close();
+			socket.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
+
+		System.out.println(ZZZProgram("localhost", 3333, "#[cout;Hello world from ZZZServer!]"));
+
+		long stopTime = System.currentTimeMillis();
+		long elapsedTime = stopTime - startTime;
+		System.out.println(elapsedTime + " milliseconds");
 	}
 }
